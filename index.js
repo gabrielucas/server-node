@@ -1,6 +1,10 @@
 const http = require('http'),
     express = require('express'),
-    app = express()
+    app = express(),
+    rotasProdutos = require('./routes/rotasProdutos'),
+    port = 3000
+
+
 
 app.get('/', (req, res) => {
     res.send('<h1>VOCÊ ESTÁ NA HOME PAGE!</h1>')
@@ -10,9 +14,11 @@ app.get('/sobre', (req, res) => {
     res.send('<h1>VOCÊ ESTÁ NA PÁGINA SOBRE</h1>')
 })
 
-app.get('/produto', (req,res) => {
-    res.send('<h1>VOCÊ ESTÁ NA PÁGINA DE PRODUTO</h1>')
-})
+// app.get('/produto', (req,res) => {
+//     res.send('<h1>VOCÊ ESTÁ NA PÁGINA DE PRODUTO</h1>')
+// })
+
+app.use('/produtos', rotasProdutos)
 
 app.get('/objeto', (req,res) => {
     res.send({nome: "Lucas",
@@ -33,10 +39,6 @@ app.get('/json', (req,res) => {
     profissao: ""}]})
 })
 
-app.get('/produto/:id', (req, res) => {
-    res.send(`<h1>VOCÊ ESTÁ NA PÁGINA DO PRODUTO DE ID ${req.params.id}</h1>`)
-})
-
 app.get('/usuarios/:nome?', (req, res) => {
 
     const {nome} = req.params
@@ -44,7 +46,7 @@ app.get('/usuarios/:nome?', (req, res) => {
 
 })
 
-app.listen(3000, 'localhost', () => console.log('O servidor está rodando...'))
+app.listen(port, 'localhost', () => console.log('O servidor está rodando...'))
 
 // http.createServer((req, res) => {
 //     res.end('Servidor funcionando!')
